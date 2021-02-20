@@ -25,7 +25,8 @@ class Kustomer extends CI_Controller
 		$data['kustomer'] = $this->db->query("SELECT * FROM tb_kustomer")->result();
 		$data1['barang'] = $this->db->query("SELECT id,nama_barang,stok FROM tb_barang WHERE stok <= 2 ")->result();
 		$data1['jumlah'] = $this->db->query("SELECT id,count(harga_jual) AS jumlah FROM tb_barang WHERE stok <= 2 ")->result();
-
+		$data['marketing'] = $this->db->query("SELECT * FROM tb_marketing")->result_array();
+		
 		$this->load->view('admin/header',$data1);
 		$this->load->view('admin/kustomer/v_kustomer',$data);
 		$this->load->view('admin/footer');
@@ -37,6 +38,7 @@ class Kustomer extends CI_Controller
 		$alamat = $this->input->post('alamat');
 		$hp = $this->input->post('hp');
 		$email = $this->input->post('email');
+		$marketing = $this->input->post('marketing');
 
 		if ($nama == "")
 		{
@@ -62,7 +64,8 @@ class Kustomer extends CI_Controller
 				'nama' => $nama,
 				'alamat' => $alamat,
 				'hp' => $hp,
-				'email' => $email
+				'email' => $email,
+				'idmarketing' => $marketing,
 			);
 
 			$this->m->tambahdata($data,'tb_kustomer');
@@ -87,6 +90,7 @@ class Kustomer extends CI_Controller
 		$alamat = $this->input->post('alamat');
 		$hp = $this->input->post('hp');
 		$email = $this->input->post('email');
+		$idmarketing = $this->input->post('idmarketing');
 
 		if ($nama == '')
 		{
@@ -116,7 +120,8 @@ class Kustomer extends CI_Controller
 				'nama' => $nama,
 				'alamat' => $alamat,
 				'hp' => $hp,
-				'email' => $email
+				'email' => $email,
+				'idmarketing' => $idmarketing
 			);
 
 			$this->m->updatedata($where,$data,'tb_kustomer');

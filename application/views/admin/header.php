@@ -156,6 +156,7 @@
                     <li><a href="<?php echo base_url().'user' ?>"><i class="fa fa-user"></i> User </a></li>
                     <!--<li><a href="<?php echo base_url().'supplier' ?>"><i class="fa fa-users"></i> Supplier </a></li>-->
                     <li><a href="<?php echo base_url().'kustomer' ?>"><i class="fa fa-user-md"></i> Kustomer </a></li>
+                    <li><a href="<?php echo base_url().'marketing' ?>"><i class="fa fa-user-md"></i> Marketing </a></li>
                   <?php } ?>
                     <!-- <li><a href="<?php echo base_url()."penjualan?kodepj=$koderandom" ?>"><i class="fa fa-shopping-cart"></i> Penjualan </a></li> -->
 										<li><a href="<?php echo base_url()."penjualanv2?kodepj=$koderandom" ?>"><i class="fa fa-shopping-cart"></i> Point Of Sale </a></li>
@@ -205,7 +206,7 @@
               <ul class="nav navbar-nav navbar-right">
                 <li class="">
                   <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <img src="" alt=""><?php echo $this->session->userdata('nama') ?>
+                    <img src="./assets/images/<?php echo $this->session->userdata('foto') ?>" alt=""><?php echo $this->session->userdata('nama') ?>
                     <span class=" fa fa-angle-down"></span>
                   </a>
                   <ul class="dropdown-menu dropdown-usermenu pull-right">

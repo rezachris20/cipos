@@ -23,6 +23,8 @@ class Penjualanv2 extends CI_Controller
 		$data['kustomer'] = $this->db->query("SELECT * FROM tb_kustomer ORDER BY nama ASC")->result();
 		$data['barang'] = $this->db->query("SELECT * FROM tb_barang ORDER by nama_barang ASC")->result();
 		$data['penjualan'] = $this->db->query("SELECT * FROM tb_penjualan,tb_barang WHERE tb_barang.kode_barcode = tb_penjualan.kode_barcode AND kode_penjualan = '$kode'")->result();
+		$data['kustomer'] = $this->db->query("SELECT * FROM tb_kustomer")->result_array();
+
 
 		$data1['barang'] = $this->db->query("SELECT id,nama_barang,stok FROM tb_barang WHERE stok <= 2 ")->result();
 		$data1['jumlah'] = $this->db->query("SELECT id,count(harga_jual) AS jumlah FROM tb_barang WHERE stok <= 2 ")->result();
@@ -136,6 +138,7 @@ class Penjualanv2 extends CI_Controller
 		$totalsemua = $this->input->post('totalsemua');
 		$bayar = $this->input->post('bayar');
 		$kembali = $this->input->post('kembali');
+		$kustomer = $this->input->post('kustomer');
 
 		if ($kodepenjualan == '')
 		{
@@ -172,7 +175,8 @@ class Penjualanv2 extends CI_Controller
 				'total_diskon' => $totaldiskon,
 				'total_all' => $totalsemua,
 				'total_bayar' => $bayar,
-				'total_kembali' => $kembali
+				'total_kembali' => $kembali,
+				'idkustomer' => ($kustomer != "") ? $kustomer : NULL,
 			);
 
 			$where = array (
@@ -193,7 +197,8 @@ class Penjualanv2 extends CI_Controller
 	{
 		$kodepenjualan = $this->input->get('kodepj');
 
-		$data['struk'] = $this->db->query("SELECT * FROM tb_penjualan,tb_kustomer,tb_barang,tb_penjualan_detail WHERE tb_barang.kode_barcode = tb_penjualan.kode_barcode AND tb_penjualan.kode_penjualan = tb_penjualan_detail.kode_penjualan AND tb_penjualan.kode_penjualan='$kodepenjualan'")->result();
+		$data['struk'] = $this->db->query("
+			SELECT * FROM tb_penjualan,tb_kustomer,tb_barang,tb_penjualan_detail WHERE tb_barang.kode_barcode = tb_penjualan.kode_barcode AND tb_penjualan.kode_penjualan = tb_penjualan_detail.kode_penjualan AND tb_penjualan.kode_penjualan='$kodepenjualan'")->result();
 		$this->load->view('admin/penjualan/v_struk',$data);
 	}
 

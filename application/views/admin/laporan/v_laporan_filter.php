@@ -59,6 +59,8 @@ error_reporting(E_ALL ^ (E_NOTICE | E_WARNING));
                 <th>Diskon</th>
                 <th>Total</th>
                 <th>Profit</th>
+                <th>Kustomer</th>
+                <th>Marketing</th>
                 <th>Status</th>
                 <th></th>         
               </tr>
@@ -85,6 +87,8 @@ error_reporting(E_ALL ^ (E_NOTICE | E_WARNING));
                   <td style="text-align: right"><?php echo "Rp. ".number_format($l->diskon,0,",",".") ?></td>
                   <td style="text-align: right"><?php echo "Rp. ".number_format($l->total,0,",",".") ?></td>
                   <td style="text-align: right"><?php echo "Rp. ".number_format($l->profitt,0,",",".") ?></td>
+                  <td><?php echo get_name_kustomer($l->idkustomer) ?></td>
+                  <td><?php echo get_name_marketing_from_kustomer($l->idkustomer) ?></td>
                   <td>
                     <?php
                       if ($l->status == "1")

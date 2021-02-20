@@ -45,13 +45,13 @@
 		cursor: pointer;
 	}
 
-	.editor{
+	.editor {
 		display: none;
 	}
 </style>
 <?php
 $kode = $_GET['kodepj'];
-$koderandom = random_string('nozero',9);
+$koderandom = random_string('nozero', 9);
 error_reporting(E_ALL ^ (E_NOTICE | E_WARNING));
 ?>
 <!-- page content -->
@@ -114,23 +114,23 @@ error_reporting(E_ALL ^ (E_NOTICE | E_WARNING));
 								$total_subtotal = $total_subtotal + $k->subtotal;
 								$total_diskon = $total_diskon + $k->diskon;
 								$total_semua = $total_semua + $k->total;
-								?>
+							?>
 								<tr data-id="<?php echo $k->id_penjualan ?>">
 									<td>
-										<a class = "btn btn-round btn-danger btn-sm" title="Hapus Data" onclick = "hapus('<?php echo $k->id_penjualan ?>','<?php echo $k->kode_barcode ?>','<?php echo $k->jumlah ?>','<?php echo $k->stok ?>')">X</a>
+										<a class="btn btn-round btn-danger btn-sm" title="Hapus Data" onclick="hapus('<?php echo $k->id_penjualan ?>','<?php echo $k->kode_barcode ?>','<?php echo $k->jumlah ?>','<?php echo $k->stok ?>')">X</a>
 									</td>
 									<td><?php echo $k->nama_barang ?></td>
 									<td style="text-align:center;"><?php echo $k->jumlah ?></td>
 									<td style="text-align:right;"><?php echo "Rp. " . number_format($k->subtotal, 0, ",", ".") ?></td>
 									<td style="text-align:right;">
 										<span class="span-diskon caption" data-id="<?php echo $k->id_penjualan ?>"><?php echo $k->diskon ?></span>
-											<input type="text" class="field-diskon form-control editor" value="<?php echo $k->diskon ?>" data-id="<?php echo $k->id_penjualan ?>" data-profit="<?php echo $k->profit_penjualan ?>" data-total="<?php echo $k->total ?>" data-subtotal="<?php echo $k->subtotal ?>" data-diskon="<?php echo $k->diskon ?>">
+										<input type="text" class="field-diskon form-control editor" value="<?php echo $k->diskon ?>" data-id="<?php echo $k->id_penjualan ?>" data-profit="<?php echo $k->profit_penjualan ?>" data-total="<?php echo $k->total ?>" data-subtotal="<?php echo $k->subtotal ?>" data-diskon="<?php echo $k->diskon ?>">
 										</span>
 									</td>
-									<td style="text-align:right;"><?php echo "Rp. ".number_format($k->total,0,",",".") ?></td>
+									<td style="text-align:right;"><?php echo "Rp. " . number_format($k->total, 0, ",", ".") ?></td>
 									<td>
-										<a class="btn btn-primary btn-sm" title="Tambah Qty" onclick = "tambahqty('<?php echo $k->id_penjualan ?>','<?php echo $k->kode_barcode ?>','<?php echo $k->jumlah ?>','<?php echo $k->stok ?>','<?php echo $harga ?>','<?php echo $k->subtotal ?>','<?php echo $k->profit ?>','<?php echo $k->profit_penjualan ?>','<?php echo $k->diskon ?>')">+</a>
-										<a class="btn btn-success btn-sm" title="Tambah Qty" onclick = "kurangqty('<?php echo $k->id_penjualan ?>','<?php echo $k->kode_barcode ?>','<?php echo $k->jumlah ?>','<?php echo $k->stok ?>','<?php echo $harga ?>','<?php echo $k->subtotal ?>','<?php echo $k->profit ?>','<?php echo $k->profit_penjualan ?>','<?php echo $k->diskon ?>')">-</a>
+										<a class="btn btn-primary btn-sm" title="Tambah Qty" onclick="tambahqty('<?php echo $k->id_penjualan ?>','<?php echo $k->kode_barcode ?>','<?php echo $k->jumlah ?>','<?php echo $k->stok ?>','<?php echo $harga ?>','<?php echo $k->subtotal ?>','<?php echo $k->profit ?>','<?php echo $k->profit_penjualan ?>','<?php echo $k->diskon ?>')">+</a>
+										<a class="btn btn-success btn-sm" title="Tambah Qty" onclick="kurangqty('<?php echo $k->id_penjualan ?>','<?php echo $k->kode_barcode ?>','<?php echo $k->jumlah ?>','<?php echo $k->stok ?>','<?php echo $harga ?>','<?php echo $k->subtotal ?>','<?php echo $k->profit ?>','<?php echo $k->profit_penjualan ?>','<?php echo $k->diskon ?>')">-</a>
 									</td>
 								</tr>
 							<?php } ?>
@@ -139,6 +139,18 @@ error_reporting(E_ALL ^ (E_NOTICE | E_WARNING));
 				</div>
 				<div class="x_panel">
 					<form class="form-horizontal">
+
+						<div class="form-group">
+							<label class="control-label col-md-4" for="first-name">Kustomer :</label>
+							<div class="col-md-4">
+								<select name="kustomer" id="kustomer" class="form-control col-md-7 col-xs-12">
+									<option value="">-Pilih-</option>
+									<?php foreach ($kustomer as $key_kustomer => $val_kustomer) { ?>
+										<option value="<?= $val_kustomer['id'] ?>"><?= $val_kustomer['nama'] ?></option>
+									<?php } ?>
+								</select>
+							</div>
+						</div>
 
 						<div class="form-group">
 							<label class="control-label col-md-4" for="first-name">Sub Total (RP) :</label>
@@ -214,7 +226,7 @@ error_reporting(E_ALL ^ (E_NOTICE | E_WARNING));
 						</div>
 					</div>
 
-					
+
 					<input type="hidden" name="kode_penjualan" id="kode_penjualan" placeholder="Kode Penjualan" value="<?php echo $kode; ?>">
 					<input type="hidden" name="kode_barcode" id="kode_barcode" placeholder="Kode Barcode">
 					<input type="hidden" name="hargajual" id="hargajual" placeholder="hargajual">
@@ -233,29 +245,30 @@ error_reporting(E_ALL ^ (E_NOTICE | E_WARNING));
 </div>
 <!-- End Modal Tambah Barang -->
 <script type="text/javascript">
+	$(document).ready(function() {
+		$('#barcode').on('input', function() {
 
-	$(document).ready(function(){
-        $('#barcode').on('input',function(){
-                 
-            var barcode=$(this).val();
-            $.ajax({
-                type : "POST",
-                url  : "<?php echo base_url('penjualanv2/get_data_barang')?>",
-                dataType : "JSON",
-                data : {barcode: barcode},
-                cache:false,
-                success: function(data){
-                    $.each(data,function(){
+			var barcode = $(this).val();
+			$.ajax({
+				type: "POST",
+				url: "<?php echo base_url('penjualanv2/get_data_barang') ?>",
+				dataType: "JSON",
+				data: {
+					barcode: barcode
+				},
+				cache: false,
+				success: function(data) {
+					$.each(data, function() {
 						$('[name="barcode_stok"]').val(data.stok);
 						$('[name="barcode_hargajual"]').val(data.harga_jual);
 						$('[name="barcode_profit"]').val(data.profit);
-						$('[name="barcode_id"]').val(data.id);                 
-                    });           
-                }
-            });
-            return false;
+						$('[name="barcode_id"]').val(data.id);
+					});
+				}
+			});
+			return false;
 		});
-		$("#barcode").keypress(function(event){
+		$("#barcode").keypress(function(event) {
 			if (event.which == 13) {
 				var barcode = $("[name = 'barcode']").val();
 				var barcode_stok = $("[name = 'barcode_stok']").val();
@@ -265,24 +278,19 @@ error_reporting(E_ALL ^ (E_NOTICE | E_WARNING));
 				var barcode_qty = $("[name = 'barcode_qty']").val();
 				var barcode_diskon = $("[name = 'barcode_diskon']").val();
 
-				if (barcode == "")
-				{
+				if (barcode == "") {
 					alert('Barcode Tidak Boleh Kosong');
 					window.location.reload();
-				}
-				else
-				{
+				} else {
 					$.ajax({
-						type : 'POST',
-						data:'barcode='+barcode+'&barcode_stok='+barcode_stok+'&barcode_kode_penjualan='+barcode_kode_penjualan+'&barcode_hargajual='+barcode_hargajual+'&barcode_profit='+barcode_profit+'&barcode_qty='+barcode_qty+'&barcode_diskon='+barcode_diskon,
-						url : '<?php echo base_url().'penjualanv2/tambah_data_by_barcode' ?>',
-						dataType : 'json',
-						success : function(hasil)
-						{     
-							location.reload(); 
+						type: 'POST',
+						data: 'barcode=' + barcode + '&barcode_stok=' + barcode_stok + '&barcode_kode_penjualan=' + barcode_kode_penjualan + '&barcode_hargajual=' + barcode_hargajual + '&barcode_profit=' + barcode_profit + '&barcode_qty=' + barcode_qty + '&barcode_diskon=' + barcode_diskon,
+						url: '<?php echo base_url() . 'penjualanv2/tambah_data_by_barcode' ?>',
+						dataType: 'json',
+						success: function(hasil) {
+							location.reload();
 						},
-						error: function()
-						{
+						error: function() {
 							alert('Barcode Tidak Ditemukan');
 							window.location.reload();
 						}
@@ -290,14 +298,14 @@ error_reporting(E_ALL ^ (E_NOTICE | E_WARNING));
 				}
 			}
 		});
-		$("#bayar").keypress(function(event){
+		$("#bayar").keypress(function(event) {
 			if (event.which == 13) {
 				simpan();
 			}
 		});
 	});
-	
-	
+
+
 	function hitungkembalian() {
 
 		var total = $("#totalsemua").autoNumeric('get');
@@ -319,6 +327,7 @@ error_reporting(E_ALL ^ (E_NOTICE | E_WARNING));
 	};
 
 	function simpan() {
+		var kustomer = $("[name = 'kustomer']").val();
 		var kodepenjualan = $("[name = 'kodepenjualan']").val();
 		var subtotal = $("#subtotal").autoNumeric('get');
 		var totaldiskon = $("#totaldiskon").autoNumeric('get');
@@ -334,7 +343,7 @@ error_reporting(E_ALL ^ (E_NOTICE | E_WARNING));
 
 			$.ajax({
 				type: 'POST',
-				data: 'kodepenjualan=' + kodepenjualan + '&subtotal=' + subtotal + '&totaldiskon=' + totaldiskon + '&totalsemua=' + totalsemua + '&bayar=' + bayar + '&kembali=' + kembali,
+				data: 'kodepenjualan=' + kodepenjualan + '&subtotal=' + subtotal + '&totaldiskon=' + totaldiskon + '&totalsemua=' + totalsemua + '&bayar=' + bayar + '&kembali=' + kembali + '&kustomer=' + kustomer,
 				url: '<?php echo base_url() . 'penjualanv2/simpan' ?>',
 				dataType: 'json',
 				success: function(hasil) {
@@ -370,15 +379,14 @@ error_reporting(E_ALL ^ (E_NOTICE | E_WARNING));
 	}
 
 	function submit(x) {
-	
+
 
 		$.ajax({ // mengambil data untuk ditampilkan di modal
-			type:'POST',
-			data:'id='+x,
-			url:'<?php echo base_url().'penjualanv2/ambilid' ?>',
-			dataType:'json',
-			success:function(hasil)
-			{
+			type: 'POST',
+			data: 'id=' + x,
+			url: '<?php echo base_url() . 'penjualanv2/ambilid' ?>',
+			dataType: 'json',
+			success: function(hasil) {
 				$("[name = 'id']").val(hasil[0].id);
 				$("[name = 'kode_barcode']").val(hasil[0].kode_barcode);
 				$("[name = 'hargajual']").val(hasil[0].harga_jual);
@@ -387,8 +395,8 @@ error_reporting(E_ALL ^ (E_NOTICE | E_WARNING));
 				$("[name = 'namemodal']").html(hasil[0].nama_barang);
 				addcart();
 				$("#showmodal").modal('hide');
-				
-				
+
+
 			}
 		})
 	}
@@ -402,24 +410,20 @@ error_reporting(E_ALL ^ (E_NOTICE | E_WARNING));
 		var diskon = $("[name = 'diskon']").val();
 		var qty = $("[name = 'qty']").val();
 
-		if (qty == "")
-		{
-			swal("Belum ada Qty","Qty harus di isi !!","warning");
-				window.setTimeout(function(){                   
-				location.reload(); 
-				},2700);  
-		}
-		else
-		{
-		
+		if (qty == "") {
+			swal("Belum ada Qty", "Qty harus di isi !!", "warning");
+			window.setTimeout(function() {
+				location.reload();
+			}, 2700);
+		} else {
+
 			$.ajax({
-				type : 'POST',
-				data:'kode_penjualan='+kode_penjualan+'&kode_barcode='+kode_barcode+'&hargajual='+hargajual+'&profit='+profit+'&stok='+stok+'&diskon='+diskon+'&qty='+qty,
-				url : '<?php echo base_url().'penjualanv2/tambahdata' ?>',
-				dataType : 'json',
-				success : function(hasil)
-				{     
-					location.reload(); 
+				type: 'POST',
+				data: 'kode_penjualan=' + kode_penjualan + '&kode_barcode=' + kode_barcode + '&hargajual=' + hargajual + '&profit=' + profit + '&stok=' + stok + '&diskon=' + diskon + '&qty=' + qty,
+				url: '<?php echo base_url() . 'penjualanv2/tambahdata' ?>',
+				dataType: 'json',
+				success: function(hasil) {
+					location.reload();
 				}
 			});
 		}
@@ -440,8 +444,8 @@ error_reporting(E_ALL ^ (E_NOTICE | E_WARNING));
 
 				$.ajax({
 					type: 'POST',
-					data: 'id='+id+'&kode_barcode='+kode_barcode+'&jumlah='+jumlah+'&stok='+stok,
-					url: '<?php echo base_url().'penjualanv2/hapusdata'?>',
+					data: 'id=' + id + '&kode_barcode=' + kode_barcode + '&jumlah=' + jumlah + '&stok=' + stok,
+					url: '<?php echo base_url() . 'penjualanv2/hapusdata' ?>',
 					success: function() {
 						swal("Selesai!", "File sudah terhapus", "success");
 						window.setTimeout(function() {
@@ -461,8 +465,8 @@ error_reporting(E_ALL ^ (E_NOTICE | E_WARNING));
 	function tambahqty(id, kode_barcode, jumlah, stok, harga_jual, subtotal, profit, profit_penjualan, diskon) {
 		$.ajax({
 			type: 'POST',
-			data: 'id='+id+'&kode_barcode='+kode_barcode+'&jumlah='+jumlah+'&stok='+stok+'&harga_jual='+harga_jual+'&subtotal='+subtotal+'&profit='+profit+'&profit_penjualan='+profit_penjualan+'&diskon='+diskon,
-			url: '<?php echo base_url().'penjualanv2/tambahqty'?>',
+			data: 'id=' + id + '&kode_barcode=' + kode_barcode + '&jumlah=' + jumlah + '&stok=' + stok + '&harga_jual=' + harga_jual + '&subtotal=' + subtotal + '&profit=' + profit + '&profit_penjualan=' + profit_penjualan + '&diskon=' + diskon,
+			url: '<?php echo base_url() . 'penjualanv2/tambahqty' ?>',
 			success: function() {
 				window.location.reload();
 			},
@@ -473,11 +477,11 @@ error_reporting(E_ALL ^ (E_NOTICE | E_WARNING));
 	}
 
 	function kurangqty(id, kode_barcode, jumlah, stok, harga_jual, subtotal, profit, profit_penjualan, diskon) {
-		
+
 		$.ajax({
 			type: 'POST',
-			data: 'id='+id+'&kode_barcode='+kode_barcode+'&jumlah='+jumlah+'&stok='+stok+'&harga_jual='+harga_jual+'&subtotal='+subtotal+'&profit='+profit+'&profit_penjualan='+profit_penjualan+'&diskon='+diskon,
-			url: '<?php echo base_url().'penjualanv2/kurangqty'?>',
+			data: 'id=' + id + '&kode_barcode=' + kode_barcode + '&jumlah=' + jumlah + '&stok=' + stok + '&harga_jual=' + harga_jual + '&subtotal=' + subtotal + '&profit=' + profit + '&profit_penjualan=' + profit_penjualan + '&diskon=' + diskon,
+			url: '<?php echo base_url() . 'penjualanv2/kurangqty' ?>',
 			success: function() {
 				window.location.reload();
 			},
@@ -487,44 +491,50 @@ error_reporting(E_ALL ^ (E_NOTICE | E_WARNING));
 		});
 	}
 
-	$(document).ready(function(){
+	$(document).ready(function() {
 
-		$(document).on("click","td",function(){
+		$(document).on("click", "td", function() {
 			$(this).find("span[class~='caption']").hide();
 			$(this).find("input[class~='editor']").fadeIn().focus();
 		});
 
 
-		$(document).on("keydown",".editor",function(e){
-			if(e.keyCode==13){
-				var target=$(e.target);
+		$(document).on("keydown", ".editor", function(e) {
+			if (e.keyCode == 13) {
+				var target = $(e.target);
 
-				var value=target.val();
-				var id=target.attr("data-id");
-				var profit=target.attr("data-profit");
-				var total=target.attr("data-total");
-				var subtotal=target.attr("data-subtotal");
-				var diskon=target.attr("data-diskon");
+				var value = target.val();
+				var id = target.attr("data-id");
+				var profit = target.attr("data-profit");
+				var total = target.attr("data-total");
+				var subtotal = target.attr("data-subtotal");
+				var diskon = target.attr("data-diskon");
 
-				var data={id:id,value:value,profit:profit,total:total,subtotal:subtotal,diskon:diskon};
-				if(target.is(".field-diskon")){
-					data.modul="diskon";
+				var data = {
+					id: id,
+					value: value,
+					profit: profit,
+					total: total,
+					subtotal: subtotal,
+					diskon: diskon
+				};
+				if (target.is(".field-diskon")) {
+					data.modul = "diskon";
 				}
 
 				$.ajax({
-					data:data,
-					type:"post",
-					cache:false,
+					data: data,
+					type: "post",
+					cache: false,
 					dataType: "json",
-					url:"<?php echo base_url('penjualanv2/inputdiskon'); ?>",
-					success: function(a){
+					url: "<?php echo base_url('penjualanv2/inputdiskon'); ?>",
+					success: function(a) {
 						target.hide();
 						target.siblings("span[class~='caption']").html(value).fadeIn();
-						location.reload(); 
+						location.reload();
 					}
 				})
 			}
 		});
 	});
-		
 </script>

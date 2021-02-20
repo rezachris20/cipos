@@ -25,6 +25,7 @@
                 <th>Alamat</th>
                 <th>No. HP</th>
                 <th>Email</th>
+                <th>Marketing</th>
                 <th style="width:18%;text-align: center;" >Aksi</th>                   
               </tr>
             </thead>
@@ -40,6 +41,7 @@
                   <td><?php echo $k->alamat ?></td>
                   <td><?php echo $k->hp ?></td>
                   <td><?php echo $k->email ?></td>                                     
+                  <td><?php echo get_name_marketing($k->idmarketing) ?></td>                                     
                   <td style="text-align: center;">
                     <a href = "#tambahkustomer" title ="Edit Data" data-toggle = "modal" class = "btn btn-round btn-info btn-sm" onclick="submit('<?php echo $k->id ?>')"><i class="fa fa-pencil"> Edit</i></a>
                   
@@ -91,6 +93,18 @@
                         <input type="text" id="email" name="email" required="required" class="form-control col-md-7 col-xs-12">
                       </div>
                     </div>
+                    
+                    <div class="form-group">
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Marketing :</label>
+                      <div class="col-md-6 col-sm-6 col-xs-12">
+                        <select name="marketing" id="marketing" class="form-control col-md-7 col-xs-12">
+                          <option value="">-Pilih-</option>
+                          <?php foreach($marketing as $key_marketing => $val_marketing) { ?>
+                            <option value="<?= $val_marketing['id'] ?>"><?= $val_marketing['nama'] ?></option>
+                          <?php } ?>
+                        </select>
+                      </div>
+                    </div>
 
                     <div class="modal-footer">
                       <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -135,6 +149,7 @@
           $("[name = 'alamat']").val(hasil[0].alamat);
           $("[name = 'hp']").val(hasil[0].hp);
           $("[name = 'email']").val(hasil[0].email);
+          $("[name = 'marketing']").val(hasil[0].idmarketing);
         }
       });
     }
@@ -146,10 +161,11 @@
     var alamat = $("[name = 'alamat']").val();
     var hp = $("[name = 'hp']").val();
     var email = $("[name = 'email']").val();
+    var marketing = $("[name = 'marketing']").val();
 
     $.ajax({
       type :'POST',
-      data :'nama='+nama+'&alamat='+alamat+'&hp='+hp+'&email='+email,
+      data :'nama='+nama+'&alamat='+alamat+'&hp='+hp+'&email='+email+'&marketing='+marketing,
       url :'<?php echo base_url().'kustomer/tambahdata' ?>',
       dataType :'json',
       success:function(hasil)
@@ -181,10 +197,11 @@
     var alamat = $("[name='alamat']").val();
     var hp = $("[name='hp']").val();
     var email = $("[name='email']").val();
+    var idmarketing = $("[name='marketing']").val();
 
     $.ajax({
       type:'POST',
-      data:'id='+id+'&nama='+nama+'&alamat='+alamat+'&hp='+hp+'&email='+email,
+      data:'id='+id+'&nama='+nama+'&alamat='+alamat+'&hp='+hp+'&email='+email+'&idmarketing='+idmarketing,
       url:'<?php echo base_url().'kustomer/editdata' ?>',
       dataType:'json',
       success:function(hasil)

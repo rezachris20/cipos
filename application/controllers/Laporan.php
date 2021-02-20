@@ -29,7 +29,32 @@ class Laporan extends CI_Controller
 
 		if ($this->form_validation->run()!= false)
 		{
-			$data['laporan'] = $this->db->query ("SELECT tb_penjualan.tgl_penjualan,tb_penjualan.kode_penjualan,tb_barang.nama_barang,tb_penjualan.jumlah, tb_penjualan.subtotal, tb_penjualan.diskon, tb_penjualan.total, tb_penjualan.profit_penjualan as profitt, tb_penjualan.status  FROM tb_penjualan, tb_barang WHERE tb_penjualan.kode_barcode = tb_barang.kode_barcode  AND status='1' AND date (tgl_penjualan) BETWEEN '$dari' AND '$sampai' ")->result();
+			$data['laporan'] = $this->db->query ("
+				SELECT 
+					tb_penjualan.tgl_penjualan,
+					tb_penjualan.kode_penjualan,
+					tb_barang.nama_barang,
+					tb_penjualan.jumlah, 
+					tb_penjualan.subtotal, 
+					tb_penjualan.diskon, 
+					tb_penjualan.total, 
+					tb_penjualan.profit_penjualan as profitt, 
+					tb_penjualan.status,
+					tb_penjualan_detail.idkustomer
+				FROM 
+					tb_penjualan, 
+					tb_barang,
+					tb_penjualan_detail
+				WHERE 
+					tb_penjualan.kode_barcode = tb_barang.kode_barcode
+				AND
+					tb_penjualan_detail.kode_penjualan = tb_penjualan.kode_penjualan
+				AND 
+					status='1' 
+				AND 
+					date (tgl_penjualan) BETWEEN '$dari' 
+				AND '$sampai' 
+			")->result();
 
 			$data1['barang'] = $this->db->query("SELECT id,nama_barang,stok FROM tb_barang WHERE stok <= 2 ")->result();
 			$data1['jumlah'] = $this->db->query("SELECT id,count(harga_jual) AS jumlah FROM tb_barang WHERE stok <= 2 ")->result();
@@ -55,7 +80,29 @@ class Laporan extends CI_Controller
 		$dari = $this->input->get('dari');
 		$sampai = $this->input->get('sampai');
 
-		$data['laporan'] = $this->db->query ("SELECT tb_penjualan.tgl_penjualan,tb_penjualan.kode_penjualan, tb_barang.nama_barang,tb_penjualan.jumlah, tb_penjualan.subtotal, tb_penjualan.diskon, tb_penjualan.total, tb_penjualan.profit_penjualan as profitt, tb_penjualan.status  FROM tb_penjualan, tb_barang WHERE tb_penjualan.kode_barcode = tb_barang.kode_barcode AND status='1' AND date (tgl_penjualan) BETWEEN '$dari' AND '$sampai' ")->result();
+		$data['laporan'] = $this->db->query ("
+			SELECT 
+				tb_penjualan.tgl_penjualan,
+				tb_penjualan.kode_penjualan, 
+				tb_barang.nama_barang,
+				tb_penjualan.jumlah, 
+				tb_penjualan.subtotal, 
+				tb_penjualan.diskon, 
+				tb_penjualan.total, 
+				tb_penjualan.profit_penjualan as profitt, 
+				tb_penjualan.status,
+				tb_penjualan_detail.idkustomer  
+			FROM 
+				tb_penjualan, 
+				tb_barang,
+				tb_penjualan_detail
+			WHERE 
+				tb_penjualan.kode_barcode = tb_barang.kode_barcode
+			AND tb_penjualan_detail.kode_penjualan = tb_penjualan.kode_penjualan
+			AND status='1' 
+			AND date (tgl_penjualan) BETWEEN '$dari' 
+			AND '$sampai' 
+		")->result();
 
 		$this->load->view('admin/laporan/v_laporan_pdf',$data);
 

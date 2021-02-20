@@ -263,7 +263,7 @@
     $.ajax({
       type:'POST',
       data:'id='+id+'&nama='+nama+'&username='+username+'&password='+password+'&upassword='+upassword+'&level='+level+'&foto='+foto,
-      url:'<?php echo base_url().'user/editdata' ?>',
+      url:'<?php echo base_url().'marketing/editdata' ?>',
       dataType:'json',
       success:function(hasil)
       {
