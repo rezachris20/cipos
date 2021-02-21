@@ -61,7 +61,7 @@
               <div class="modal-content">
                 <div class="modal-header">
                   <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span></button>
-                  <h4 class="modal-title" id="myModalLabel">Data Kustomer</h4>
+                  <h4 class="modal-title" id="myModalLabel">Data Marketing</h4>
                   <center>
                     <font color="red">
                       <p id="pesan"></p>
